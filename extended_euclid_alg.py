@@ -1,5 +1,6 @@
 # Extended Euclidean Algorithm
-
+# takes a and b integers
+# returns x and y such that xa + yb = gcd(a, b)
 def ext_gcd(a, b):
     x, y, z, w = 1, 0, 0, 1
     while b != 0:
