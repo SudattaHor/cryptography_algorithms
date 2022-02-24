@@ -1,17 +1,6 @@
 from random import randrange
 from extended_euclid_alg import *
-
-
-# finding g^a mod m
-def pow_mod(g, a, m):
-    p = 1
-    while a != 0:
-        if a % 2 == 1:
-            p = (p * g) % m
-        a = a // 2
-        g = g ** 2 % m
-    return p
-
+from fast_powering import *
 
 p = 9853457983475897869054869759765789357890385093475093475803478054768221
 g = 3458973489576784567897568954790348590839045745760547680547049750935709
