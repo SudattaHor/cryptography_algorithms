@@ -50,6 +50,3 @@ def baby_giant_mult(g, h, p):
         j += 1
         h = (h * g_n_inv) % p
     return baby_list[h] + j * n
-
-
-print(baby_giant_mult(113459, 185149, 348149))
