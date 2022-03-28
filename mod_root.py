@@ -8,6 +8,3 @@ def mod_root(A, B):
         if A == square:
             toRet.append(i)
     return toRet
-
-
-print(mod_root(29, 35))

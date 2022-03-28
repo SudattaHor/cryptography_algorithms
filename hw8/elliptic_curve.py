@@ -33,3 +33,5 @@ class EllipticCurve:
         xx = np.linspace(xmin, xmax)
         yy = np.sqrt(xx ** 3 + self.A * xx + self.B)
         plt.plot(xx, yy)
+
+
