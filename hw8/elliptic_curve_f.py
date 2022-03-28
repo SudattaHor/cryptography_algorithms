@@ -51,9 +51,15 @@ class EllipticCurve:
         if (y1 + y2) % self.p == 0:
             return self.O
         if P1 == P2:
+            if np.gcd(2*y1, self.p) != 1:
+                print(f"{self.p} is not prime! {np.gcd(2*y1, self.p)} is a factor!")
+                return None
             inv, _ = ext_gcd(2 * y1, self.p)
             lam = ((3 * x1 ** 2 + self.A) * inv) % self.p
         else:
+            if np.gcd(x2-x1, self.p) != 1:
+                print(f"{self.p} is not prime! {np.gcd(x2-x1, self.p)} is a factor!")
+                return None
             inv, _ = ext_gcd(x2 - x1, self.p)
             lam = ((y2 - y1) * inv) % self.p
         x3 = (lam ** 2 - x1 - x2) % self.p
@@ -112,10 +118,10 @@ class ECDS:
         candidate = self.E.add(self.E.mult(self.G, v1), self.E.mult(V, v2))
         return candidate[0] % self.q == s1
 
-
-E = EllipticCurve(231, 473, 17389)
-q = 1321
-G = (11259, 11278)
-Umberto = ECDS(E, G, q, document=993)
-s1, s2 = 907, 296
-print(Umberto.verify(s1, s2, (11017, 14637)))
+#
+# E = EllipticCurve(231, 473, 17389)
+# q = 1321
+# G = (11259, 11278)
+# Umberto = ECDS(E, G, q, document=993)
+# s1, s2 = 907, 296
+# print(Umberto.verify(s1, s2, (11017, 14637)))
