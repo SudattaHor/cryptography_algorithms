@@ -1,4 +1,4 @@
-from fast_powering import *
+from Introductory.fast_powering import *
 import numpy as np
 
 

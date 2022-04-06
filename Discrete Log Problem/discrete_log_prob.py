@@ -1,8 +1,7 @@
 from math import ceil
-from math import floor
 from math import sqrt
-from extended_euclid_alg import *
-from fast_powering import *
+from Introductory.extended_euclid_alg import *
+from Introductory.fast_powering import *
 
 """
 Let p be an odd prime

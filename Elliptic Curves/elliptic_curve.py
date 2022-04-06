@@ -1,6 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+"""
+Class for an Elliptic Curve over real numbers
+"""
+
 
 class EllipticCurve:
     def __init__(self, A, B):
@@ -33,5 +37,3 @@ class EllipticCurve:
         xx = np.linspace(xmin, xmax)
         yy = np.sqrt(xx ** 3 + self.A * xx + self.B)
         plt.plot(xx, yy)
-
-

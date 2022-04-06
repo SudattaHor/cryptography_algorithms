@@ -1,6 +1,6 @@
 from random import randrange
-from extended_euclid_alg import *
-from fast_powering import *
+from Introductory.extended_euclid_alg import *
+from Introductory.fast_powering import *
 
 p = 9853457983475897869054869759765789357890385093475093475803478054768221
 g = 3458973489576784567897568954790348590839045745760547680547049750935709

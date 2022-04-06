@@ -1,7 +1,7 @@
 import numpy as np
-from extended_euclid_alg import *
-from mod_root import *
-from fast_powering import *
+from Introductory.extended_euclid_alg import *
+from Introductory.mod_root import *
+from Introductory.fast_powering import *
 
 
 # Elliptic Curve over finite field F_p
@@ -93,35 +93,3 @@ class EllipticCurve:
         for P1 in self.solutions:
             row = [self.add(P1, P2) for P2 in self.solutions]
             print(row)
-
-
-class ECDS:
-    def __init__(self, EllpCurve, G, q, document):
-        self.E = EllpCurve
-        self.G = G
-        self.q = q
-        self.d = document
-
-    def sign(self, s, e):
-        V = self.E.mult(self.G, s)
-        print(f"Verification key V for secret signing key {s} is V = {V}")
-        einv = ext_gcd(e, self.q)[0]
-        s1 = self.E.mult(self.G, e)[0] % self.q
-        s2 = ((self.d + s*s1)*einv) % self.q
-        return s1, s2
-
-    def verify(self, s1, s2, V):
-        s2inv = ext_gcd(s2, self.q)[0]
-        v1 = (self.d*s2inv) % self.q
-        v2 = (s1*s2inv) % self.q
-        print(v1, v2)
-        candidate = self.E.add(self.E.mult(self.G, v1), self.E.mult(V, v2))
-        return candidate[0] % self.q == s1
-
-#
-# E = EllipticCurve(231, 473, 17389)
-# q = 1321
-# G = (11259, 11278)
-# Umberto = ECDS(E, G, q, document=993)
-# s1, s2 = 907, 296
-# print(Umberto.verify(s1, s2, (11017, 14637)))
