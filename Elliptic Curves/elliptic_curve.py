@@ -1,9 +1,12 @@
-import matplotlib.pyplot as plt
-import numpy as np
-
 """
 Class for an Elliptic Curve over real numbers
+
+An elliptic curve is a set of points that satisfy the equation
+y^2 = x^3 + A x + B
 """
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class EllipticCurve:
@@ -32,8 +35,9 @@ class EllipticCurve:
             i += 1
         return ret
 
-    # TODO - fix plot
-    def plot(self, xmin, xmax):
+    def plot(self, xmin, xmax, ymin, ymax):
         xx = np.linspace(xmin, xmax)
-        yy = np.sqrt(xx ** 3 + self.A * xx + self.B)
-        plt.plot(xx, yy)
+        yy = np.linspace(ymin, ymax)
+        xx, yy = np.meshgrid(xx, yy)
+        zz = yy**2 - xx**3 - self.A*xx - self.B
+        plt.contour(xx, yy, zz, [0])

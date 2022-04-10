@@ -1,16 +1,22 @@
+"""
+Elliptic Curve over finite field F_p
+"""
+
 import numpy as np
+from Introductory.euclidean_alg import *
 from Introductory.extended_euclid_alg import *
 from Introductory.mod_root import *
 from Introductory.fast_powering import *
 
+class IdObj:
+    pass
+identity = IdObj()
 
-# Elliptic Curve over finite field F_p
 class EllipticCurve:
     def __init__(self, A, B, p):
         self.A = A
         self.B = B
         self.p = p
-        self.O = "identity"
         self.solutions = self.find_points()
 
     def findy(self, x):
@@ -38,27 +44,27 @@ class EllipticCurve:
                     solutions.add((x, y))
         ret = list(solutions)
         ret.sort(key=lambda y: y[0])
-        ret.insert(0, self.O)
+        ret.insert(0, identity)
         return ret
 
     def add(self, P1, P2):
-        if P1 == self.O:
+        if P1 == identity:
             return P2
-        if P2 == self.O:
+        if P2 == identity:
             return P1
         x1, y1 = P1
         x2, y2 = P2
         if (y1 + y2) % self.p == 0:
-            return self.O
+            return identity
         if P1 == P2:
-            if np.gcd(2*y1, self.p) != 1:
-                print(f"{self.p} is not prime! {np.gcd(2*y1, self.p)} is a factor!")
+            if euclid_alg(2 * y1, self.p) != 1:
+                print(f"{self.p} is not prime! {euclid_alg(2 * y1, self.p)} is a factor!")
                 return None
             inv, _ = ext_gcd(2 * y1, self.p)
             lam = ((3 * x1 ** 2 + self.A) * inv) % self.p
         else:
-            if np.gcd(x2-x1, self.p) != 1:
-                print(f"{self.p} is not prime! {np.gcd(x2-x1, self.p)} is a factor!")
+            if euclid_alg(x2 - x1, self.p) != 1:
+                print(f"{self.p} is not prime! {euclid_alg(x2 - x1, self.p)} is a factor!")
                 return None
             inv, _ = ext_gcd(x2 - x1, self.p)
             lam = ((y2 - y1) * inv) % self.p
@@ -67,13 +73,16 @@ class EllipticCurve:
         return x3, y3
 
     def mult(self, P, n):
-        ret = P
-        i = 1
-        while i < n:
-            ret = self.add(P, ret)
-            i += 1
-        return ret
+        Q = P
+        R = identity
+        while n > 0:
+            if n % 2 == 1:
+                R = self.add(R, Q)
+            Q = self.add(Q, Q)
+            n = n // 2
+        return R
 
+    # collision algorithm to solve ECDLP
     def log(self, P, Q):
         r = int(np.sqrt(self.p))
         jlist = {}

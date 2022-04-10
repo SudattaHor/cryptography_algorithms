@@ -3,15 +3,14 @@ from elliptic_curve_f import *
 
 
 def lenstra_factor(N):
-    P = Pp = (2, 5)
-    E = EllipticCurve(4, 9, N)
-    j = 0
-    while j < np.sqrt(N):
-        Pp = E.add(Pp, P)
-        if Pp is None:
+    A = np.random.randint(N)
+    a = np.random.randint(N)
+    b = np.random.randint(N)
+    P = (a, b)
+    B = (b**2 - a**3 - A*a) % N
+    E = EllipticCurve(A, B, N)
+    for j in range(int(np.sqrt(N))):
+        Q = E.mult(P, j)
+        if Q is None:
             return
-        j += 1
-    lenstra_factor(N)
-
-
-lenstra_factor(589)
+    print("Factoring unsuccesful")
