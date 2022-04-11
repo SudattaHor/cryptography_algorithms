@@ -17,7 +17,6 @@ class EllipticCurve:
         self.A = A
         self.B = B
         self.p = p
-        self.solutions = self.find_points()
 
     def findy(self, x):
         """
@@ -45,7 +44,16 @@ class EllipticCurve:
         ret = list(solutions)
         ret.sort(key=lambda y: y[0])
         ret.insert(0, identity)
+        self.points = ret
         return ret
+
+    def invert(self, a):
+        gcd = euclid_alg(a, self.p)
+        if gcd == 1:
+            return ext_gcd(a, self.p)[0]
+        else:
+            print(f"{self.p} is not prime! {gcd} is a factor!")
+            return None
 
     def add(self, P1, P2):
         if P1 == identity:
@@ -54,19 +62,17 @@ class EllipticCurve:
             return P1
         x1, y1 = P1
         x2, y2 = P2
-        if (y1 + y2) % self.p == 0:
+        if x1 == x2 and (y1 + y2) % self.p == 0:
             return identity
         if P1 == P2:
-            if euclid_alg(2 * y1, self.p) != 1:
-                print(f"{self.p} is not prime! {euclid_alg(2 * y1, self.p)} is a factor!")
+            inv = self.invert(2 * y1)
+            if inv is None:
                 return None
-            inv, _ = ext_gcd(2 * y1, self.p)
             lam = ((3 * x1 ** 2 + self.A) * inv) % self.p
         else:
-            if euclid_alg(x2 - x1, self.p) != 1:
-                print(f"{self.p} is not prime! {euclid_alg(x2 - x1, self.p)} is a factor!")
+            inv = self.invert(x2 - x1)
+            if inv is None:
                 return None
-            inv, _ = ext_gcd(x2 - x1, self.p)
             lam = ((y2 - y1) * inv) % self.p
         x3 = (lam ** 2 - x1 - x2) % self.p
         y3 = (lam * (x1 - x3) - y1) % self.p
@@ -78,7 +84,11 @@ class EllipticCurve:
         while n > 0:
             if n % 2 == 1:
                 R = self.add(R, Q)
+                if R is None:
+                    return None
             Q = self.add(Q, Q)
+            if Q is None:
+                return None
             n = n // 2
         return R
 

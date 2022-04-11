@@ -1,5 +1,4 @@
 from Introductory.fast_powering import *
-import numpy as np
 
 # PARAMETERS
 N = 493
@@ -22,7 +21,7 @@ def find_square(N, p):
     return None
 
 
-t_list = np.linspace(a, b, b - a + 1)
+t_list = range(a, b)
 f_list = {t: f(t) for t in t_list}
 
 print(list(f_list.values()))
@@ -40,3 +39,5 @@ for p in prime_powers:
                 f_list[t] = f_list[t] // p
         print(list(f_list.values()))
         n += 1
+
+
