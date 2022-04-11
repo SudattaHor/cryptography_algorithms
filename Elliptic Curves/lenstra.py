@@ -14,3 +14,5 @@ def lenstra_factor(N):
         if Q is None:
             return
     print("Factoring unsuccesful")
+
+
