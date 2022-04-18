@@ -1,6 +1,6 @@
 from math import ceil
 from math import sqrt
-from Introductory.extended_euclid_alg import *
+from Introductory.euclidean_alg import *
 from Introductory.fast_powering import *
 
 """

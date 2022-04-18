@@ -1,5 +1,5 @@
 from random import randrange
-from Introductory.extended_euclid_alg import *
+from Introductory.euclidean_alg import *
 from Introductory.fast_powering import *
 
 p = 9853457983475897869054869759765789357890385093475093475803478054768221

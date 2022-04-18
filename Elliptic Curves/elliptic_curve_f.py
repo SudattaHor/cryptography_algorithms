@@ -4,7 +4,6 @@ Elliptic Curve over finite field F_p
 
 import numpy as np
 from Introductory.euclidean_alg import *
-from Introductory.extended_euclid_alg import *
 from Introductory.mod_root import *
 from Introductory.fast_powering import *
 
@@ -48,7 +47,7 @@ class EllipticCurve:
         return ret
 
     def invert(self, a):
-        gcd = euclid_alg(a, self.p)
+        gcd = gcd(a, self.p)
         if gcd == 1:
             return ext_gcd(a, self.p)[0]
         else:

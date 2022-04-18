@@ -1,7 +1,7 @@
 """
 Class for Elliptic Curve Digital Signature Algorithm
 """
-
+from Introductory.euclidean_alg import *
 
 class ECDSA:
     def __init__(self, EllpCurve, G, q, document):
