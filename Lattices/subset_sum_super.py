@@ -19,9 +19,9 @@ def super_subset_solve(M, S):
             S -= m
     return x
 
-M = np.array([4, 12, 15, 36, 75, 162])
-S = 214
-x = super_subset_solve(M, S)
-valid = (S == np.sum(M * x))
-print(f"x: {x}")
-print(f"valid: {valid}")
+# M = np.array([4, 12, 15, 36, 75, 162])
+# S = 214
+# x = super_subset_solve(M, S)
+# valid = (S == np.sum(M * x))
+# print(f"x: {x}")
+# print(f"valid: {valid}")
